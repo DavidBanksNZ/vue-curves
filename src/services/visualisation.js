@@ -50,15 +50,15 @@ export const VisualisationService = {
 	},
 
 	getTraceSpeed(speed) {
-		return 0.1 + 4.9 * Math.pow(this.speed, 2);
+		return 0.1 + 4.9 * Math.pow(speed, 2);
 	},
 
 	getMorphDuration(speed) {
-		return 100 + 2900 * (1 - Math.sqrt(this.speed));
+		return 100 + 2900 * (1 - Math.sqrt(speed));
 	},
 
 	getMorphDelay(speed) {
-		return 500 * (1 - Math.sqrt(this.speed));
+		return 500 * (1 - Math.sqrt(speed));
 	}
 
 

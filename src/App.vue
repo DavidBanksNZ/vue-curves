@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div class="app">
 
 		<app-header></app-header>
 
@@ -36,8 +36,8 @@
 			eventBus.$on(EVENTS.ITERATIONS_CHANGED, v => this.iterations = v);
 			eventBus.$on(EVENTS.ALGORITHM_CHANGED, v => {
 				this.algorithm = v;
-				this.iterations = Math.min(this.iterations, ALGORITHMS[v.toUpperCase()].MAX_ITERATIONS);
-				console.log(this.iterations)
+				// Make sure iterations gets reset properly
+				//this.iterations = Math.min(this.iterations, ALGORITHMS[v.toUpperCase()].MAX_ITERATIONS);
 			});
 			eventBus.$on(EVENTS.MODE_CHANGED, v => this.mode = v);
 			eventBus.$on(EVENTS.ANGLE_CHANGED, v => this.angle = v);
@@ -45,6 +45,7 @@
 		},
 
 		data () {
+			// Defaults
 			return {
 				algorithm: 'Koch',
 				iterations: 2,
@@ -62,8 +63,8 @@
 	}
 </script>
 
-<style>
-	#app {
+<style scoped>
+	.app {
 		padding: 0 1rem;
 		width: 700px;
 		color: #333;

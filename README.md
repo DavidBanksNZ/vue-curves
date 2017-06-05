@@ -2,8 +2,7 @@
 
 A fairly basic VueJS application (built with Webpack) which shows some animations relating to fractals and space-filling curves.
 
-NOTE: this project is not yet complete. Needs tidy up - plus production build doesn't work properly - the animations are missing! 
-This requires further investigation.
+NOTE: this project is not yet complete. Needs tidy up.
 
 ### Build Setup
 

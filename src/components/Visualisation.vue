@@ -38,7 +38,7 @@
 				.attr('width', CONFIG.WIDTH)
 				.attr('height', CONFIG.HEIGHT);
 
-			eventBus.$on(EVENTS.REPLAY, () => this.render(true));
+			eventBus.$on(EVENTS.REPLAY, () => this.render({reuse: true}));
 
 			this.render();
 		},
@@ -191,6 +191,7 @@
 
 			},
 			renderTrace (_opts) {
+				console.log(_opts)
 
 				if (typeof this.cancelFn === 'function') {
 					this.cancelFn();
