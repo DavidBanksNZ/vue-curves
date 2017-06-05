@@ -191,8 +191,6 @@
 
 			},
 			renderTrace (_opts) {
-				console.log(_opts)
-
 				if (typeof this.cancelFn === 'function') {
 					this.cancelFn();
 					this.cancelFn = null;
