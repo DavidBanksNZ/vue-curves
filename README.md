@@ -4,6 +4,10 @@ A fairly basic VueJS application (built with Webpack) which shows some animation
 
 NOTE: this project is not yet complete. Needs tidy up.
 
+## Demo
+
+https://davidbanksnz.github.io/vue-curves/
+
 ### Build Setup
 
 ``` bash
