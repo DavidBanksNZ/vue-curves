@@ -34,6 +34,8 @@
 						return ALGORITHMS.KOCH.MAX_ITERATIONS;
 					case 'Dragon':
 						return ALGORITHMS.DRAGON.MAX_ITERATIONS;
+					case 'Hilbert':
+						return ALGORITHMS.HILBERT.MAX_ITERATIONS;
 					default:
 						return 5;
 				}

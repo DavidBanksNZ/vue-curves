@@ -25,6 +25,9 @@ export const ALGORITHMS = {
 	},
 	DRAGON: {
 		MAX_ITERATIONS: 15
+	},
+	HILBERT: {
+		MAX_ITERATIONS: 8
 	}
 };
 

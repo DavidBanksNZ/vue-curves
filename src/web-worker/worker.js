@@ -1,10 +1,10 @@
 'use strict';
 
+import {deg2Rad, rotatePt} from './_utils';
+
 const Koch = require('./_koch').default;
 const Dragon = require('./_dragon').default;
-
-let algorithm = 'Koch';
-
+const Hilbert = require('./_hilbert').default;
 
 /**
  * When a message is received, calculate the points requested and post the results
@@ -13,15 +13,24 @@ let algorithm = 'Koch';
  */
 onmessage = e => {
 	const d = e.data;
-	algorithm = d.algorithm;
+	let algorithm = d.algorithm;
 	try {
-		const points = calculatePoints(
-			[0, 0],
-			[d.width, 0],
-			d.N,
-			d.flat,
-			d.opts
-		);
+		let points;
+		switch (algorithm) {
+			case 'Hilbert':
+				points = hilbert(d);
+				break;
+			default:
+				points = calculatePoints(
+					algorithm,
+					[0, 0],
+					[d.width, 0],
+					d.N,
+					d.flat,
+					d.opts
+				);
+				break;
+		}
 		send({
 			input: d,
 			output: points
@@ -33,6 +42,51 @@ onmessage = e => {
 		});
 	}
 };
+
+
+function hilbert(d) {
+	const numCells = Math.pow(4, d.N);
+	const numRows = Math.sqrt(numCells);
+	const size = Math.min(d.width, d.height) - 40;
+	const cellSize = size / numRows;
+
+	let points = [
+		[cellSize/2, cellSize/2],
+		[cellSize/2, 3 * cellSize/2],
+		[3 * cellSize/2, 3 * cellSize/2],
+		[3 * cellSize/2, cellSize/2]
+	];
+
+	const translate = (points, x, y) => {
+		return points.map(pt => [pt[0] + x, pt[1] + y]);
+	};
+
+	const rotate = (points, center, angle) => {
+		const rad = deg2Rad(angle);
+		return points.map(pt => rotatePt(pt, rad, center));
+	};
+
+	const flipRight = (points, center) => {
+		return rotate(points, center, -90).reverse();
+	};
+
+	const flipLeft = (points, center) => {
+		return rotate(points, center, 90).reverse();
+	};
+
+	for (let i = 2; i <= d.N; i++) {
+		const jump = cellSize * Math.pow(2, i - 1);
+		points = [
+			...flipRight(points, [jump/2, jump/2]),
+			...translate(points, 0, jump),
+			...translate(points, jump, jump),
+			...flipLeft(translate(points, jump, 0), [3 * jump/2 , jump/2])
+		];
+	}
+
+	return points;
+}
+
 
 
 /**
@@ -47,6 +101,7 @@ function send (data) {
 /**
  * Calculate all points between the start and end point for a given number of
  * iterations, and whether we want the 'flattened' state or not.
+ * @param algorithm
  * @param pt1  - start point
  * @param pt2  - end point
  * @param N    - # of iterations
@@ -54,7 +109,7 @@ function send (data) {
  * @param opts - extra options to pass to the points generating function
  * @returns {Array<number[]>}
  */
-function calculatePoints(pt1, pt2, N, flat, opts) {
+function calculatePoints(algorithm, pt1, pt2, N, flat, opts) {
 	let pts = [pt1, pt2];
 	let i = 0;
 
@@ -62,7 +117,7 @@ function calculatePoints(pt1, pt2, N, flat, opts) {
 		let _pairs = pairs(pts);
 		let numPairs = _pairs.length;
 		let ptGroups = _pairs
-			.map((pair, j) => getPointsBetween(j, pair[0], pair[1], i, N, flat, opts))
+			.map((pair, j) => getPointsBetween(algorithm, j, pair[0], pair[1], i, N, flat, opts))
 			.map((pts, j) => {
 				return (j + 1 < numPairs) ? pts.slice(0, -1) : pts
 			});
@@ -76,6 +131,7 @@ function calculatePoints(pt1, pt2, N, flat, opts) {
 
 /**
  * Runs the active algorithm, getting the points in between a pair of provided points.
+ * @param algorithm - the current algorithm
  * @param index     - the current point index
  * @param pt1       - start poin
  * @param pt2       - end point
@@ -85,7 +141,7 @@ function calculatePoints(pt1, pt2, N, flat, opts) {
  * @param opts      - extra options to pass to algorithm
  * @returns {Array<number[]>}
  */
-function getPointsBetween (index, pt1, pt2, iteration, N, flat, opts) {
+function getPointsBetween (algorithm, index, pt1, pt2, iteration, N, flat, opts) {
 	const getFlatValues = iteration < N ? false : flat;
 	switch (algorithm) {
 		case 'Dragon':

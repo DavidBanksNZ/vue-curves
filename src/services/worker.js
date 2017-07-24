@@ -19,6 +19,7 @@ export const WorkerService = {
 		return new Promise((resolve, reject) => {
 			this.worker.onmessage = e => {
 				const data = JSON.parse(e.data);
+				console.log(data);
 				if (data.error) {
 					this.data.lastResult = null;
 					reject(data.error);
@@ -136,6 +137,7 @@ export const WorkerService = {
 			algorithm,
 			N: iterations,
 			width: startWidth,
+			height: CONFIG.HEIGHT,
 			flat: flat || false,
 			opts: opts || {}
 		});
