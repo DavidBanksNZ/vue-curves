@@ -1,6 +1,5 @@
 'use strict';
 
-import {deg2Rad, rotatePt} from './_utils';
 
 const Koch = require('./_koch').default;
 const Dragon = require('./_dragon').default;
@@ -18,7 +17,7 @@ onmessage = e => {
 		let points;
 		switch (algorithm) {
 			case 'Hilbert':
-				points = hilbert(d);
+				points = Hilbert.calculatePoints(d);
 				break;
 			default:
 				points = calculatePoints(
@@ -42,51 +41,6 @@ onmessage = e => {
 		});
 	}
 };
-
-
-function hilbert(d) {
-	const numCells = Math.pow(4, d.N);
-	const numRows = Math.sqrt(numCells);
-	const size = Math.min(d.width, d.height) - 40;
-	const cellSize = size / numRows;
-
-	let points = [
-		[cellSize/2, cellSize/2],
-		[cellSize/2, 3 * cellSize/2],
-		[3 * cellSize/2, 3 * cellSize/2],
-		[3 * cellSize/2, cellSize/2]
-	];
-
-	const translate = (points, x, y) => {
-		return points.map(pt => [pt[0] + x, pt[1] + y]);
-	};
-
-	const rotate = (points, center, angle) => {
-		const rad = deg2Rad(angle);
-		return points.map(pt => rotatePt(pt, rad, center));
-	};
-
-	const flipRight = (points, center) => {
-		return rotate(points, center, -90).reverse();
-	};
-
-	const flipLeft = (points, center) => {
-		return rotate(points, center, 90).reverse();
-	};
-
-	for (let i = 2; i <= d.N; i++) {
-		const jump = cellSize * Math.pow(2, i - 1);
-		points = [
-			...flipRight(points, [jump/2, jump/2]),
-			...translate(points, 0, jump),
-			...translate(points, jump, jump),
-			...flipLeft(translate(points, jump, 0), [3 * jump/2 , jump/2])
-		];
-	}
-
-	return points;
-}
-
 
 
 /**
