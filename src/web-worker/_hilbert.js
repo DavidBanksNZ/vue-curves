@@ -18,7 +18,7 @@ const Hilbert = {
 			);
 		}
 
-		const numCells = Math.pow(4, data.N);
+		const numCells = 4 ** data.N;
 		const numRows = Math.sqrt(numCells);
 		const size = Math.min(data.width, data.height) - 40;
 		const cellSize = size / numRows;
@@ -45,7 +45,7 @@ const Hilbert = {
 		};
 
 		for (let i = 2; i <= data.N; i++) {
-			const currCellSpacing = cellSize * Math.pow(2, i - 1);
+			const currCellSpacing = cellSize * 2 ** (i - 1);
 			const halfCurrCellSpacing = currCellSpacing / 2;
 			points = [
 				...flip(points, [halfCurrCellSpacing, halfCurrCellSpacing], -90),
