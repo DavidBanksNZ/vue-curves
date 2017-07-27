@@ -18,8 +18,7 @@ const Hilbert = {
 			);
 		}
 
-		const numCells = 4 ** data.N;
-		const numRows = Math.sqrt(numCells);
+		const numRows = 2 ** data.N;
 		const size = Math.min(data.width, data.height) - 40;
 		const cellSize = size / numRows;
 		const halfCellSize = cellSize / 2;
