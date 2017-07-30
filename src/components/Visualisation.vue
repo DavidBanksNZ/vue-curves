@@ -143,7 +143,7 @@
 							const duration = VisualisationService.getMorphDuration(this.speed);
 
 							return new Promise((_resolve, _reject) => {
-								VisualisationService.morphPath(pathElem, data.flat.output, data.actual.output, this.algorithm, duration, delay)
+								VisualisationService.morphPath(pathElem, data.flat.output, data.actual.output, duration, delay)
 									.on('start', () => {
 										this.setIterationLabel(i);
 									})
@@ -225,7 +225,7 @@
 
 					WorkerService.dataReady(this.algorithm, this.mode, this.iterations, opts).then(
 						data => {
-							const path = VisualisationService.definePath(this.algorithm, data.output);
+							const path = VisualisationService.definePath(data.output);
 							this.activePath = VisualisationService.generatePathElem(this.svg, path);
 
 							VisualisationService.tracePath(this.activePath, VisualisationService.getTraceSpeed(this.speed))

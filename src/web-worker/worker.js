@@ -13,13 +13,15 @@ onmessage = e => {
 	try {
 		let points;
 		switch (e.data.algorithm) {
-			case 'Hilbert':
+			case 'HILBERT':
 				points = Hilbert.calculatePoints(e.data);
 				break;
-			case 'Koch':
+			case 'KOCH':
+			case 'CESARO':
+				e.data.opts = {...e.data.opts, full: e.data.algorithm === 'KOCH'};
 				points = Koch.calculatePoints(e.data);
 				break;
-			case 'Dragon':
+			case 'DRAGON':
 				points = Dragon.calculatePoints(e.data);
 				break;
 			default:

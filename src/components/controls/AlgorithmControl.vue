@@ -5,19 +5,19 @@
 			<option v-for="_alg in algorithms"
 			        :value="_alg"
 			        :selected="_alg === algorithm">
-				{{_alg}}
+				{{getLabel(_alg)}}
 			</option>
 		</select>
 	</div>
 </template>
 
 <script>
-	import {eventBus} from '../../main';
+	import {eventBus, ALGORITHMS} from '../../main';
 
 	export default {
 		data() {
 			return {
-				algorithms: ['Koch', 'Dragon', 'Hilbert']
+				algorithms: Object.keys(ALGORITHMS)
 			}
 		},
 		props: {
@@ -26,6 +26,9 @@
 		methods: {
 			changed(evt) {
 				eventBus.setAlgorithm(evt.target.value);
+			},
+			getLabel(alg) {
+				return ALGORITHMS[alg].LABEL;
 			}
 		}
 	}

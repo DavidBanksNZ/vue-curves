@@ -26,15 +26,17 @@
 
 		computed: {
 			showAngle: function () {
-				return this.algorithm === 'Koch';
+				return this.algorithm === 'CESARO';
 			},
 			maxIterations: function () {
 				switch (this.algorithm) {
-					case 'Koch':
+					case 'CESARO':
+						return ALGORITHMS.CESARO.MAX_ITERATIONS;
+					case 'KOCH':
 						return ALGORITHMS.KOCH.MAX_ITERATIONS;
-					case 'Dragon':
+					case 'DRAGON':
 						return ALGORITHMS.DRAGON.MAX_ITERATIONS;
-					case 'Hilbert':
+					case 'HILBERT':
 						return ALGORITHMS.HILBERT.MAX_ITERATIONS;
 					default:
 						return 5;
