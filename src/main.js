@@ -13,8 +13,8 @@ export const EVENTS = {
 
 
 export const CONFIG = {
-	WIDTH: 640,
-	HEIGHT: 320,
+	WIDTH: 750,
+	HEIGHT: 375,
 	COLOR: '#3675AA'
 };
 
@@ -25,6 +25,9 @@ export const ALGORITHMS = {
 	},
 	DRAGON: {
 		MAX_ITERATIONS: 15
+	},
+	HILBERT: {
+		MAX_ITERATIONS: 8
 	}
 };
 

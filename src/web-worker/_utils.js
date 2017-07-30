@@ -39,3 +39,15 @@ export function rotatePt(pt, angle, center) {
 		center[1] + ptRotated[1]
 	];
 }
+
+/**
+ * Return an array containing consecutive pairs of all points in the input
+ * array.
+ * @param arr
+ * @returns {Array<any[]>}
+ */
+export function pairs (arr) {
+	return arr
+		.map((val, i) => (i > 0 ? [arr[i - 1], arr[i]] : null))
+		.slice(1);
+}

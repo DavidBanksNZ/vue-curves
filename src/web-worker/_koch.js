@@ -1,8 +1,33 @@
-import {deg2Rad, rotatePt} from './_utils';
+import {deg2Rad, rotatePt, pairs} from './_utils';
 
-export default {
+const Koch = {
 
-	getPointsBetween(pt1, pt2, flat, data, opts) {
+	calculatePoints (data) {
+
+		const pt1 = [0, 0];
+		const pt2 = [data.width, 0];
+		let pts = [pt1, pt2];
+		let i = 0;
+
+		while (++i <= data.N) {
+			let _pairs = pairs(pts);
+			let numPairs = _pairs.length;
+			let ptGroups = _pairs
+				.map((pair, j) => {
+					const getFlatValues = i < data.N ? false : data.flat;
+					return Koch.getPointsBetween(pair[0], pair[1], getFlatValues, data.opts);
+				})
+				.map((pts, j) => {
+					return (j + 1 < numPairs) ? pts.slice(0, -1) : pts
+				});
+
+			pts = Array.prototype.concat.apply([], ptGroups);
+		}
+
+		return pts;
+	},
+
+	getPointsBetween(pt1, pt2, flat, opts) {
 
 		const dX = pt2[0] - pt1[0];
 		const dY = pt2[1] - pt1[1];
@@ -42,3 +67,5 @@ export default {
 	}
 
 };
+
+export default Koch;

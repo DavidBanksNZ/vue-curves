@@ -1,6 +1,33 @@
-export default {
+import {pairs} from './_utils';
 
-	getPointsBetween(pt1, pt2, flat, data, opts) {
+const Dragon = {
+
+	calculatePoints (data) {
+
+		const pt1 = [0, 0];
+		const pt2 = [data.width, 0];
+		let pts = [pt1, pt2];
+		let i = 0;
+
+		while (++i <= data.N) {
+			let _pairs = pairs(pts);
+			let numPairs = _pairs.length;
+			let ptGroups = _pairs
+				.map((pair, j) => {
+					const getFlatValues = i < data.N ? false : data.flat;
+					return Dragon.getPointsBetween(pair[0], pair[1], getFlatValues, {right: j % 2 === 0});
+				})
+				.map((pts, j) => {
+					return (j + 1 < numPairs) ? pts.slice(0, -1) : pts
+				});
+
+			pts = Array.prototype.concat.apply([], ptGroups);
+		}
+
+		return pts;
+	},
+
+	getPointsBetween(pt1, pt2, flat, data) {
 
 		if (flat) {
 			const center = [
@@ -48,3 +75,5 @@ export default {
 	}
 
 };
+
+export default Dragon;
