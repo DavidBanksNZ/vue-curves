@@ -37,7 +37,7 @@
 			eventBus.$on(EVENTS.ALGORITHM_CHANGED, v => {
 				this.algorithm = v;
 				// Make sure iterations gets reset properly
-				//this.iterations = Math.min(this.iterations, ALGORITHMS[v.toUpperCase()].MAX_ITERATIONS);
+				this.iterations = Math.min(this.iterations, ALGORITHMS[v].MAX_ITERATIONS);
 			});
 			eventBus.$on(EVENTS.MODE_CHANGED, v => this.mode = v);
 			eventBus.$on(EVENTS.ANGLE_CHANGED, v => this.angle = v);

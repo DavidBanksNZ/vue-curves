@@ -34,7 +34,7 @@ export const ALGORITHMS = {
 	},
 	HILBERT: {
 		MAX_ITERATIONS: 8,
-		LABEL: 'Hibert curve'
+		LABEL: 'Hilbert curve'
 	}
 };
 

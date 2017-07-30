@@ -29,18 +29,7 @@
 				return this.algorithm === 'CESARO';
 			},
 			maxIterations: function () {
-				switch (this.algorithm) {
-					case 'CESARO':
-						return ALGORITHMS.CESARO.MAX_ITERATIONS;
-					case 'KOCH':
-						return ALGORITHMS.KOCH.MAX_ITERATIONS;
-					case 'DRAGON':
-						return ALGORITHMS.DRAGON.MAX_ITERATIONS;
-					case 'HILBERT':
-						return ALGORITHMS.HILBERT.MAX_ITERATIONS;
-					default:
-						return 5;
-				}
+				return ALGORITHMS[this.algorithm].MAX_ITERATIONS;
 			}
 		},
 

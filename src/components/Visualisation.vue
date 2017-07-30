@@ -89,18 +89,18 @@
 				switch (this.mode) {
 					case 'Trace':
 						return this.renderTrace(opts).then(
-							r => console.info(`Trace animation (N = ${N}) ${r ? 'completed' : 'cancelled'}`),
+							r => console.info(`[${this.algorithm}] Trace animation (N = ${N}) ${r ? 'completed' : 'cancelled'}`),
 							e => {
 								this.showError(e);
-								console.error(`Trace animation (N = ${N}) failed`, e);
+								console.error(`[${this.algorithm}] Trace animation (N = ${N}) failed`, e);
 							}
 						);
 					case 'Morph':
 						return this.renderMorph(opts).then(
-							r => console.info(`Morph animation (N = ${N}) ${r ? 'completed' : 'cancelled'}`),
+							r => console.info(`[${this.algorithm}] Morph animation (N = ${N}) ${r ? 'completed' : 'cancelled'}`),
 							e => {
 								this.showError(e);
-								console.error(`Morph animation failed (N = ${N})`, e);
+								console.error(`[${this.algorithm}] Morph animation failed (N = ${N})`, e);
 							}
 						);
 					default:
