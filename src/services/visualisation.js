@@ -62,5 +62,4 @@ export const VisualisationService = {
 		return 500 * (1 - Math.sqrt(speed));
 	}
 
-
 };

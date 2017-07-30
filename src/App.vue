@@ -48,8 +48,8 @@
 			// Defaults
 			return {
 				algorithm: 'KOCH',
-				iterations: 2,
-				angle: 50,
+				iterations: 3,
+				angle: 30, // Cesaro only
 				speed: 0.4,
 				mode: 'Trace'
 			}

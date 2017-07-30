@@ -5,26 +5,24 @@ const Dragon = {
 	calculatePoints (data) {
 
 		// Completed curve has aspect ratio 1.502
-
 		const aspect = 1.502;
+		const padding = 25;
 		let size; // refers to smaller dimension, height in this case
 
 		if (data.width >= aspect * data.height) {
-			size = data.height - 50;
+			size = data.height - padding * 2;
 		} else {
-			size = (data.width - 50) /  aspect;
+			size = (data.width - padding * 2) /  aspect;
 		}
-
-		size /= aspect;
 
 		// Theoretically use 0.5 to offset, but centroid gets skewed to top-left
 		// because of the larger size changes caused by rotations during earlier
 		// iterations. Using the below offsets gives a good center approximation
-		const x0 = data.width / 2 - 0.42 * size * aspect;
-		const y0 = data.height / 2 + 0.38 * size / aspect;
+		const x0 = data.width / 2 - 0.42 * size;
+		const y0 = data.height / 2 + 0.16 * size;
 
 		const pt1 = [x0, y0];
-		const pt2 = [x0 + size * aspect, y0];
+		const pt2 = [x0 + size, y0];
 		let pts = [pt1, pt2];
 		let i = 0;
 
