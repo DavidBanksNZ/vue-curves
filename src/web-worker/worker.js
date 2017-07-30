@@ -17,11 +17,8 @@ onmessage = e => {
 				points = Hilbert.calculatePoints(e.data);
 				break;
 			case 'Koch':
-				e.data.opts = {...e.data.opts, full: true};
-				points = Koch.calculatePoints(e.data);
-				break;
 			case 'Cesàro':
-				e.data.opts = {...e.data.opts, full: false};
+				e.data.opts = {...e.data.opts, full: e.data.algorithm === 'Koch'};
 				points = Koch.calculatePoints(e.data);
 				break;
 			case 'Dragon':
