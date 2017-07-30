@@ -14,7 +14,7 @@ export const EVENTS = {
 
 export const CONFIG = {
 	WIDTH: 750,
-	HEIGHT: 375,
+	HEIGHT: 500,
 	COLOR: '#3675AA'
 };
 

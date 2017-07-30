@@ -4,18 +4,48 @@ const Koch = {
 
 	calculatePoints (data) {
 
-		const pt1 = [0, 0];
-		const pt2 = [data.width, 0];
+		if (!data.opts.full) {
+
+			// Cesàro
+			return Koch.calculateSegmentPoints([0, 0], [data.width, 0], data.flat, data.N, data.opts)
+
+		} else {
+
+			data.opts.angle = 60;
+			const size = Math.min(data.width, data.height) - 20;
+			const centroid = [data.width / 2, data.height / 2];
+			const basePts = [];
+			const refPt = [centroid[0], centroid[1] + size/2];
+
+			for (let i = 0; i < 3; i++) {
+				const angle = -deg2Rad(120 * i);
+				basePts.push(rotatePt(refPt, angle, centroid));
+			}
+
+			// complete the loop
+			basePts.push(basePts[0]);
+
+			// for each segment, calculate the points along that segment, reduce into single array.
+			const basePtPairs = pairs(basePts);
+			return basePtPairs.reduce((accum, pair) => {
+				return accum.concat(Koch.calculateSegmentPoints(pair[0], pair[1], data.flat, data.N, data.opts))
+			}, []);
+
+		}
+	},
+
+
+	calculateSegmentPoints (pt1, pt2, flat, N, opts) {
 		let pts = [pt1, pt2];
 		let i = 0;
 
-		while (++i <= data.N) {
+		while (++i <= N) {
 			let _pairs = pairs(pts);
 			let numPairs = _pairs.length;
 			let ptGroups = _pairs
 				.map((pair, j) => {
-					const getFlatValues = i < data.N ? false : data.flat;
-					return Koch.getPointsBetween(pair[0], pair[1], getFlatValues, data.opts);
+					const getFlatValues = i < N ? false : flat;
+					return Koch.getPointsBetween(pair[0], pair[1], getFlatValues, opts);
 				})
 				.map((pts, j) => {
 					return (j + 1 < numPairs) ? pts.slice(0, -1) : pts
@@ -26,6 +56,7 @@ const Koch = {
 
 		return pts;
 	},
+
 
 	getPointsBetween(pt1, pt2, flat, opts) {
 

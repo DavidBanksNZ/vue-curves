@@ -19,7 +19,6 @@ export const WorkerService = {
 		return new Promise((resolve, reject) => {
 			this.worker.onmessage = e => {
 				const data = JSON.parse(e.data);
-				console.log(data);
 				if (data.error) {
 					this.data.lastResult = null;
 					reject(data.error);
@@ -132,11 +131,10 @@ export const WorkerService = {
 	 * @param opts       - extra options to send
 	 */
 	sendTaskToWorker (algorithm, iterations, flat, opts) {
-		let startWidth = algorithm === 'Dragon' ? 300 : CONFIG.WIDTH;
 		this.worker.postMessage({
 			algorithm,
 			N: iterations,
-			width: startWidth,
+			width: CONFIG.WIDTH,
 			height: CONFIG.HEIGHT,
 			flat: flat || false,
 			opts: opts || {}

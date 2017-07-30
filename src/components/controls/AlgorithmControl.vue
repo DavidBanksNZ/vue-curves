@@ -17,7 +17,7 @@
 	export default {
 		data() {
 			return {
-				algorithms: ['Koch', 'Dragon', 'Hilbert']
+				algorithms: ['Koch', 'Cesàro', 'Dragon', 'Hilbert']
 			}
 		},
 		props: {

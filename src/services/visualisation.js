@@ -10,30 +10,31 @@ export const VisualisationService = {
 			.style('stroke', CONFIG.COLOR);
 	},
 
-	definePath(algorithm, pts) {
+	definePath(pts) {
 		const path = d3.path();
 
-		// Start location of path
-		let xOffset = algorithm === 'Dragon' ? 160 : 0;
-		let yOffset = algorithm === 'Dragon' ? 110 : CONFIG.HEIGHT;
-		path.moveTo(xOffset + pts[0][0], yOffset - pts[0][1]);
+		// y offset of path
+		let yOffset = CONFIG.HEIGHT;
+
+		// start location of path
+		path.moveTo(pts[0][0], yOffset - pts[0][1]);
 
 		// Now define the shape of the path
 		for (let i = 1, N = pts.length; i < N; i++) {
-			path.lineTo(xOffset + pts[i][0], yOffset - pts[i][1]);
+			path.lineTo(pts[i][0], yOffset - pts[i][1]);
 		}
 
 		return path;
 	},
 
-	morphPath(pathElem, pathData1, pathData2, algorithm, duration, delay) {
+	morphPath(pathElem, pathData1, pathData2, duration, delay) {
 		return pathElem
-			.attr('d', VisualisationService.definePath(algorithm, pathData1))
+			.attr('d', VisualisationService.definePath(pathData1))
 			.transition()
 			.delay(delay)
 			.duration(duration)
 			.ease(d3.easeCubicInOut)
-			.attr('d', VisualisationService.definePath(algorithm, pathData2));
+			.attr('d', VisualisationService.definePath(pathData2));
 	},
 
 	tracePath(path, speed) {
