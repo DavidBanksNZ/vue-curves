@@ -143,6 +143,10 @@
 							const duration = VisualisationService.getMorphDuration(this.speed);
 
 							return new Promise((_resolve, _reject) => {
+								if (data.flat.error || data.actual.error) {
+									_reject(data.flat.error || data.actual.error);
+									return;
+								}
 								VisualisationService.morphPath(pathElem, data.flat.output, data.actual.output, duration, delay)
 									.on('start', () => {
 										this.setIterationLabel(i);

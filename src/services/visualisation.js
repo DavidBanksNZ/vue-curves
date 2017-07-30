@@ -38,7 +38,6 @@ export const VisualisationService = {
 	},
 
 	tracePath(path, speed) {
-
 		const totalLength = path.node().getTotalLength();
 
 		return path
