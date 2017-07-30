@@ -47,7 +47,7 @@
 		data () {
 			// Defaults
 			return {
-				algorithm: 'Koch',
+				algorithm: 'KOCH',
 				iterations: 2,
 				angle: 50,
 				speed: 0.4,

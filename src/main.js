@@ -21,13 +21,20 @@ export const CONFIG = {
 
 export const ALGORITHMS = {
 	KOCH: {
-		MAX_ITERATIONS: 8
+		MAX_ITERATIONS: 8,
+		LABEL: 'Koch snowflake'
+	},
+	CESARO: {
+		MAX_ITERATIONS: 8,
+		LABEL: 'Cesàro fractal'
 	},
 	DRAGON: {
-		MAX_ITERATIONS: 15
+		MAX_ITERATIONS: 15,
+		LABEL: 'Heighway dragon'
 	},
 	HILBERT: {
-		MAX_ITERATIONS: 8
+		MAX_ITERATIONS: 8,
+		LABEL: 'Hibert curve'
 	}
 };
 
